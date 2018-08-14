@@ -3,6 +3,8 @@ const requireDir = require('require-dir');
 
 const routes = express.Router();
 
+const authMiddleware = require('./middlewares/auth');
+
 const controllers = requireDir('./controllers');
 
 console.log(controllers);
@@ -11,5 +13,17 @@ console.log(controllers);
  * Auth
  */
 routes.post('/signup', controllers.authController.signup);
+routes.post('/signin', controllers.authController.signin);
+
+/**
+ * Todas rotas daqui para baixo utilizam autenticação
+ */
+routes.use(authMiddleware);
+
+routes.get('/tweets', (req, res) => {
+  console.log(req.userId);
+
+  res.send('OK');
+});
 
 module.exports = routes;
