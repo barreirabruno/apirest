@@ -27,6 +27,11 @@ routes.get('/tweets', (req, res) => {
 });
 
 /**
+ * Users
+ */
+routes.put('/users', controllers.userController.update);
+
+/**
  * Tweets
  */
 routes.post('/tweets', controllers.tweetController.create);
