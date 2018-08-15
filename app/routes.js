@@ -32,6 +32,12 @@ routes.get('/tweets', (req, res) => {
 routes.put('/users', controllers.userController.update);
 
 /**
+ * Follows
+ */
+routes.post('/follow/:id', controllers.followController.create);
+routes.delete('/unfollow/:id', controllers.followController.destroy);
+
+/**
  * Tweets
  */
 routes.post('/tweets', controllers.tweetController.create);
