@@ -1,8 +1,42 @@
 const mongoose = require('mongoose');
 
 const User = mongoose.model('User');
+const Tweet = mongoose.model('Tweet');
 // Consigo ter informação de qualquer usuario logado com req.userId
 module.exports = {
+  async me(req, res, next) {
+    try {
+      const user = await User.findById(req.userId);
+      const tweetCount = await Tweet.find({ user: user.id }).count();
+
+      return res.json({
+        user,
+        tweetCount,
+        followersCounters: user.followers.length,
+        followingCounters: user.following.length,
+      });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  async feed(req, res, next) {
+    try {
+      const user = await User.findById(req.userId);
+      const { following } = user;
+
+      const tweets = await Tweet.find({
+        user: { $in: [user.id, ...following] },
+      })
+        .limit(50)
+        .sort('-createdAt');
+
+      return res.json(tweets);
+    } catch (err) {
+      return next(err);
+    }
+  },
+
   async update(req, res, next) {
     try {
       const id = req.userId;
