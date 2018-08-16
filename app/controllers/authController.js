@@ -41,7 +41,7 @@ module.exports = {
         from: 'Clone Twiter <diego@rocketseat.com.br>',
         to: user.email,
         subject: `Bem vindo ao Clone Twitter, ${user.name}`,
-        html: 'Seja bem vindo ao Clone do Twitter, faça login com sua conta.',
+        html: 'Bem vindo ao twitter Clone, faça login com sua conta',
       });
 
       return res.json({
