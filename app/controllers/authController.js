@@ -37,11 +37,15 @@ module.exports = {
 
       const user = await User.create(req.body);
 
-      await sendMail({
+      sendMail({
         from: 'Clone Twiter <diego@rocketseat.com.br>',
         to: user.email,
         subject: `Bem vindo ao Clone Twitter, ${user.name}`,
-        html: 'Bem vindo ao twitter Clone, faça login com sua conta',
+        template: 'auth/register',
+        context: {
+          name: user.name,
+          username: user.username,
+        },
       });
 
       return res.json({
